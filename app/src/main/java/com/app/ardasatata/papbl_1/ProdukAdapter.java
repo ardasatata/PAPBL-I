@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.app.ardasatata.papbl_1.dbHelper.ProdukHelper;
 
@@ -42,11 +43,35 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.CustomView
 
     @Override
     public void onBindViewHolder(ProdukAdapter.CustomViewHolder holder, int position) {
+        final String nama = produk.get(position).getNama();
+        final int harga = produk.get(position).getHarga();
+
+        holder.namaProduk.setText(nama);
+        holder.hargaProduk.setText(Integer.toString(harga));
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return produk.size();
+    }
+
+    public void addItem(ArrayList<Produk> mData) {
+        this.produk = mData;
+        notifyDataSetChanged();
+    }
+
+    public class CustomViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView namaProduk;
+        private TextView hargaProduk;
+
+        public CustomViewHolder(View itemView) {
+            super(itemView);
+
+            namaProduk = itemView.findViewById(R.id.namaProduk);
+            hargaProduk = itemView.findViewById(R.id.hargaProduk);
+
+        }
     }
 }

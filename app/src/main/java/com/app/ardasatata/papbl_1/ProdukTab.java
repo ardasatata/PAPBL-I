@@ -4,12 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+
+import com.app.ardasatata.papbl_1.dbHelper.ProdukHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by ardasatata on 2/18/18.
@@ -18,6 +24,9 @@ import android.support.v4.app.Fragment;
 public class ProdukTab extends Fragment{
 
     FloatingActionButton addProduk;
+    private RecyclerView recyclerProduk;
+    private ProdukAdapter produkAdapter;
+    private ProdukHelper produkHelper;
 
 
     void ShowAddProduk(){
@@ -31,12 +40,23 @@ public class ProdukTab extends Fragment{
         super.onCreate(savedInstanceState);
 
 
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.tab_produk,container,false);
+        recyclerProduk = rootview.findViewById(R.id.recyclerProduk);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerProduk.setLayoutManager(layoutManager);
+
+        produkAdapter = new ProdukAdapter(getContext());
+        produkHelper = new ProdukHelper(getContext());
+
+        getAllProduk();
 
         return rootview;
     }
@@ -53,5 +73,14 @@ public class ProdukTab extends Fragment{
 
             }
         });
+    }
+
+    private void getAllProduk(){
+        produkHelper.open();
+        ArrayList<Produk> produk =produkHelper.getAllData();
+        produkHelper.close();
+        produkAdapter.addItem(produk);
+        recyclerProduk.setAdapter(produkAdapter);
+
     }
 }
