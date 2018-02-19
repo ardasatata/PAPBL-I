@@ -21,16 +21,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/nomorProduk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="1"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/namaProduk"
+                android:id="@+id/namaProdukJual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pisang Goreng"
@@ -38,10 +29,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/hargaProduk"
+                android:id="@+id/totalJual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="15.000"
+                android:text="20"
                 android:textSize="24sp" />
 
         </LinearLayout>
@@ -53,23 +44,33 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/editP"
+                android:id="@+id/minusJ"
                 style="@style/Widget.AppCompat.Button.Small"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:drawable/ic_menu_edit"
-                android:backgroundTint="@android:color/holo_blue_bright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@android:drawable/ic_input_delete"
+                android:backgroundTint="@color/colorAccent"
                 android:elevation="8dp" />
 
             <Button
-                android:id="@+id/deleteP"
+                android:id="@+id/plusJ"
                 style="@style/Widget.AppCompat.Button.Small"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:background="@android:drawable/ic_delete"
-                android:backgroundTint="@android:color/holo_blue_bright"
+                android:background="@android:drawable/ic_input_delete"
+                android:backgroundTint="@color/colorAccent"
+                android:elevation="8dp" />
+
+            <Button
+                android:id="@+id/deleteJ"
+                style="@style/Widget.AppCompat.Button.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@android:drawable/ic_input_delete"
+                android:backgroundTint="@color/colorAccent"
                 android:elevation="8dp" />
 
         </LinearLayout>

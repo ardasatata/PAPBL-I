@@ -6,16 +6,39 @@
     android:layout_height="match_parent"
     tools:context="com.app.ardasatata.papbl_1.MainActivity$PlaceholderFragment">
 
-    <TextView
-        android:id="@+id/section_label"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/refreshJ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Refresh" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerJual"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/row_jual">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addJual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="160dp"
-        android:layout_marginTop="24dp"
-        android:text="Penjualan"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        android:layout_marginBottom="72dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@android:color/holo_blue_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:rippleColor="@android:color/holo_blue_bright" />
 
 </android.support.constraint.ConstraintLayout>

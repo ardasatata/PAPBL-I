@@ -1,43 +1,36 @@
 package com.app.ardasatata.papbl_1;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.app.ardasatata.papbl_1.dbHelper.PenjualanHelper;
 import com.app.ardasatata.papbl_1.dbHelper.ProdukHelper;
 
 /**
  * Created by ardasatata on 2/19/18.
  */
 
-public class addProdukFragment extends DialogFragment {
+public class editProdukFragment extends DialogFragment {
 
     EditText nama;
     EditText harga;
+    int id;
     ProdukHelper produkHelper;
 
     String aNama;
     int aHarga;
 
-    public addProdukFragment() {
+    public editProdukFragment() {
 
     }
 
-    public static addProdukFragment newInstance(String title) {
-        addProdukFragment frag = new addProdukFragment();
+    public static editProdukFragment newInstance(String title) {
+        editProdukFragment frag = new editProdukFragment();
         Bundle args = new Bundle();
         args.putString("title",title);
         frag.setArguments(args);
@@ -48,21 +41,28 @@ public class addProdukFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.dialog_add_produk,container,false);
+        View rootView = inflater.inflate(R.layout.dialog_edit_produk,container,false);
         getDialog().setTitle("Add Produk");
-        nama = (EditText) rootView.findViewById(R.id.tambahNamaProduk);
-        harga = (EditText) rootView.findViewById(R.id.tambahHargaProduk);
+        nama = (EditText) rootView.findViewById(R.id.editNamaP);
+        harga = (EditText) rootView.findViewById(R.id.editHargaP);
 
-        Button btOK = (Button) rootView.findViewById(R.id.buttonTambah);
-        Button btCancel = rootView.findViewById(R.id.buttonCancle);
+        Button btOK = (Button) rootView.findViewById(R.id.editP);
+        Button btCancel = rootView.findViewById(R.id.cancelPedit);
 
         produkHelper = new ProdukHelper(getActivity());
+
+        String namaP=getArguments().getString("namaP");
+        int hargaP=getArguments().getInt("hargaP");
+        int idP=getArguments().getInt("idP");
+
+        nama.setText(namaP);
+        harga.setText(Integer.toString(hargaP));
+        id=idP;
 
         btOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                insertProduk();
+                editProduk();
                 getDialog().hide();
             }
         });
@@ -130,6 +130,14 @@ public class addProdukFragment extends DialogFragment {
         produkHelper.insert(produk);
         produkHelper.close();
 
+    }
+
+    private void editProduk(){
+        produkHelper.open();
+        Produk produk = new Produk(id,nama.getText().toString(),Integer.parseInt(harga.getText().toString()));
+        // Produk produk = new Produk(aNama,aHarga);
+        produkHelper.update(produk);
+        produkHelper.close();
     }
 
 

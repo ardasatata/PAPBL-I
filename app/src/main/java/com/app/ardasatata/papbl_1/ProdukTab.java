@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.app.ardasatata.papbl_1.dbHelper.ProdukHelper;
 
@@ -28,6 +30,10 @@ public class ProdukTab extends Fragment{
     private ProdukAdapter produkAdapter;
     private ProdukHelper produkHelper;
 
+    private TextView search;
+    private Button searchBtn;
+    private Button refreshP;
+
 
     void ShowAddProduk(){
 
@@ -40,8 +46,8 @@ public class ProdukTab extends Fragment{
         super.onCreate(savedInstanceState);
 
 
-
     }
+
 
     @Nullable
     @Override
@@ -53,10 +59,28 @@ public class ProdukTab extends Fragment{
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerProduk.setLayoutManager(layoutManager);
 
+        refreshP = rootview.findViewById(R.id.refreshP);
+        searchBtn = rootview.findViewById(R.id.cariP);
+        search = rootview.findViewById(R.id.searchP);
+
         produkAdapter = new ProdukAdapter(getContext());
         produkHelper = new ProdukHelper(getContext());
 
         getAllProduk();
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getResult(search.getText().toString());
+            }
+        });
+
+        refreshP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllProduk();
+            }
+        });
 
         return rootview;
     }
@@ -70,20 +94,23 @@ public class ProdukTab extends Fragment{
             public void onClick(View view) {
 
                 ShowAddProduk();
-
             }
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getAllProduk();
-    }
 
     void getAllProduk(){
         produkHelper.open();
         ArrayList<Produk> produk =produkHelper.getAllData();
+        produkHelper.close();
+        produkAdapter.addItem(produk);
+        recyclerProduk.setAdapter(produkAdapter);
+
+    }
+
+    void getResult(String key){
+        produkHelper.open();
+        ArrayList<Produk> produk =produkHelper.search(key);
         produkHelper.close();
         produkAdapter.addItem(produk);
         recyclerProduk.setAdapter(produkAdapter);

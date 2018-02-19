@@ -6,23 +6,6 @@
     android:layout_height="match_parent"
     >
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:layout_marginBottom="492dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_weight="0"
-        android:text="Produk"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -34,6 +17,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/searchP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="search"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/cariP"
+                style="@style/Widget.AppCompat.Button.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:text="Cari"
+                tools:text="cari" />
+
+            <Button
+                android:id="@+id/refreshP"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:text="Refresh"
+                tools:text="refresh" />
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerProduk"
@@ -48,14 +64,15 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addProduk"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="72dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
         android:focusable="true"
         android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@android:color/holo_blue_dark"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        />
+        app:rippleColor="@android:color/holo_blue_bright" />
 
 </android.support.constraint.ConstraintLayout>

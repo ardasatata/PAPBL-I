@@ -41,7 +41,7 @@ public class ProdukHelper {
 
 
     public ArrayList<Produk> getAllData() {
-        Cursor cursor = database.query(TABLE_PRODUK, null, null, null, null, null, _ID + " DESC", null);
+        Cursor cursor = database.query(TABLE_PRODUK, null, null, null, null, null, _ID + " ASC", null);
         cursor.moveToFirst();
         ArrayList<Produk> arrayList = new ArrayList<>();
         Produk produk;
@@ -60,24 +60,86 @@ public class ProdukHelper {
         return arrayList;
     }
 
+    public ArrayList<Produk> search(String key) {
+        Cursor cursor = database.query(true, TABLE_PRODUK, null, NAMA + " LIKE ?",
+                new String[] {"%"+ key+ "%" }, null, null, null,
+                null);
+        cursor.moveToFirst();
+        ArrayList<Produk> arrayList = new ArrayList<>();
+        Produk produk;
+        if (cursor.getCount() > 0) {
+            do {
+                produk = new Produk();
+                produk.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
+                produk.setNama(cursor.getString(cursor.getColumnIndexOrThrow(NAMA)));
+                produk.setHarga(cursor.getInt(cursor.getColumnIndexOrThrow(HARGA)));
+                arrayList.add(produk);
+                cursor.moveToNext();
+
+            } while (!cursor.isAfterLast());
+        }
+        cursor.close();
+        return arrayList;
+    }
+
+    public String getNamaByID(int id) {
+        String key = Integer.toString(id);
+        Cursor cursor = database.query( TABLE_PRODUK, null, "_ID =?",new String[]{key}, null, null, null,
+                null);
+        cursor.moveToFirst();
+        Produk  produk = new Produk();
+                produk.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
+                produk.setNama(cursor.getString(cursor.getColumnIndexOrThrow(NAMA)));
+                produk.setHarga(cursor.getInt(cursor.getColumnIndexOrThrow(HARGA)));
+        cursor.close();
+        return produk.getNama();
+    }
+
     public long insert(Produk produk) {
-        ContentValues initialValues = new ContentValues();
-        initialValues.put(NAMA, produk.getNama());
-        initialValues.put(HARGA, produk.getHarga());
-        return database.insert(TABLE_PRODUK, null, initialValues);
+
+        database.beginTransaction();
+        try {
+            ContentValues initialValues = new ContentValues();
+            initialValues.put(NAMA, produk.getNama());
+            initialValues.put(HARGA, produk.getHarga());
+            return database.insert(TABLE_PRODUK, null, initialValues);
+        }
+        finally {
+            database.setTransactionSuccessful();
+            database.endTransaction();
+        }
+
+
     }
 
 
     public int update(Produk produk) {
-        ContentValues args = new ContentValues();
-        args.put(NAMA, produk.getNama());
-        args.put(HARGA, produk.getHarga());
-        return database.update(TABLE_PRODUK, args, _ID + "= '" + produk.getId() + "'", null);
+
+        database.beginTransaction();
+        try{
+            ContentValues args = new ContentValues();
+            args.put(NAMA, produk.getNama());
+            args.put(HARGA, produk.getHarga());
+            return database.update(TABLE_PRODUK, args, _ID + "= '" + produk.getId() + "'", null);
+        }
+        finally {
+            database.setTransactionSuccessful();
+            database.endTransaction();
+        }
+
     }
 
 
     public int delete(int id) {
-        return database.delete(TABLE_PRODUK, _ID + " = '" + id + "'", null);
+
+        database.beginTransaction();
+        try {
+            return database.delete(TABLE_PRODUK, _ID + " = '" + id + "'", null);
+        }
+        finally {
+            database.setTransactionSuccessful();
+            database.endTransaction();
+        }
     }
 
 }

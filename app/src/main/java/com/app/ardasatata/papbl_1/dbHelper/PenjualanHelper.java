@@ -61,23 +61,48 @@ public class PenjualanHelper {
     }
 
     public long insert(Penjualan penjualan) {
-        ContentValues initialValues = new ContentValues();
-        initialValues.put(ID_PRODUK, penjualan.getId_produk());
-        initialValues.put(TOTAL_PRODUK, penjualan.getTotal());
-        return database.insert(TABLE_PENJUALAN, null, initialValues);
+
+        database.beginTransaction();
+        try {
+            ContentValues initialValues = new ContentValues();
+            initialValues.put(ID_PRODUK, penjualan.getId_produk());
+            initialValues.put(TOTAL_PRODUK, penjualan.getTotal());
+            return database.insert(TABLE_PENJUALAN, null, initialValues);
+        }
+        finally {
+            database.setTransactionSuccessful();
+            database.endTransaction();
+        }
     }
 
 
     public int update(Penjualan penjualan) {
-        ContentValues args = new ContentValues();
-        args.put(ID_PRODUK, penjualan.getId_produk());
-        args.put(TOTAL_PRODUK, penjualan.getTotal());
-        return database.update(TABLE_PENJUALAN, args, _ID + "= '" + penjualan.getId() + "'", null);
+
+        database.beginTransaction();
+        try {
+            ContentValues args = new ContentValues();
+            args.put(ID_PRODUK, penjualan.getId_produk());
+            args.put(TOTAL_PRODUK, penjualan.getTotal());
+            return database.update(TABLE_PENJUALAN, args, _ID + "= '" + penjualan.getId() + "'", null);
+        }
+        finally {
+            database.setTransactionSuccessful();
+            database.endTransaction();
+        }
+
     }
 
 
     public int delete(int id) {
-        return database.delete(TABLE_PENJUALAN, _ID + " = '" + id + "'", null);
+
+        database.beginTransaction();
+        try {
+            return database.delete(TABLE_PENJUALAN, _ID + " = '" + id + "'", null);
+        }
+        finally {
+            database.setTransactionSuccessful();
+            database.endTransaction();
+        }
     }
 
 }
