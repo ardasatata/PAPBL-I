@@ -75,7 +75,13 @@ public class ProdukTab extends Fragment{
         });
     }
 
-    private void getAllProduk(){
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAllProduk();
+    }
+
+    void getAllProduk(){
         produkHelper.open();
         ArrayList<Produk> produk =produkHelper.getAllData();
         produkHelper.close();

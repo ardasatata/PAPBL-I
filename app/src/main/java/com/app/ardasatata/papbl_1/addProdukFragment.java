@@ -114,7 +114,6 @@ public class addProdukFragment extends DialogFragment {
 //    }
 
 
-
     private void insertProduk(){
         produkHelper.open();
         Produk produk = new Produk(nama.getText().toString(),Integer.parseInt(harga.getText().toString()));
